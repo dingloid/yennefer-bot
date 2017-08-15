@@ -217,4 +217,4 @@ FakesAssemblies/
 _Pvt_Extensions
 
 # Secret Sauce
-Yennefer-bot/Yennefer-bot/bin/Debug/*.json
+*bot-settings/
