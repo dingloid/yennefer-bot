@@ -37,6 +37,22 @@ namespace RESTBotService.Services
             return response?.Account;
         }
 
+        /// <summary>
+        /// Gets the price of an instrument.
+        /// </summary>
+        /// <param name="apiKey">The API key token to authorize a call for prices.</param>
+        /// <returns>The candle stick prices of the past minute.</returns>
+        public async Task<CandleRequest> GetCandleStickData(string apiKey, string curPair)
+        {
+            var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=6&price=M&granularity=M1";
+            var uri = new Uri(apiUrl);
+
+            var response = await SendRequestAsync<CandleRequest>(uri);
+
+            return response;
+        }
+
+
         private async Task<TData> SendRequestAsync<TData>(Uri uri, HttpMethod httpMethod = null, IDictionary<string, string> headers = null, object requestData = null)
         {
             TData result;
