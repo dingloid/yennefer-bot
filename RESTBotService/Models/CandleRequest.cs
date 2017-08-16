@@ -14,6 +14,6 @@ namespace RESTBotService.Models
         public string Granularity { get; set; }
 
         [JsonProperty("candles")]
-        private IList<Candle> Candles { get; set; }
+        public IList<Candle> Candles { get; set; }
     }
 }

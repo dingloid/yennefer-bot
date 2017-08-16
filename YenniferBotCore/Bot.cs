@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -60,8 +61,11 @@ namespace YenniferBotCore
             Console.WriteLine("#####################\n Yennefer Bot Online \n#####################");
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
+            var getCandles = await _botService.GetCandleStickData("JPY_USD");
+
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}");
+            Console.WriteLine(getCandles);
 
             while (!_cancellationToken.IsCancellationRequested)
             {

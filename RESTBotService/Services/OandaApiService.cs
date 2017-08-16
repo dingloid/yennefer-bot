@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -40,16 +41,16 @@ namespace RESTBotService.Services
         /// <summary>
         /// Gets the price of an instrument.
         /// </summary>
-        /// <param name="apiKey">The API key token to authorize a call for prices.</param>
+        /// <param name="curPair">Currency Pair you want to choose. i.e JPY_USD format</param>
         /// <returns>The candle stick prices of the past minute.</returns>
-        public async Task<CandleRequest> GetCandleStickData(string apiKey, string curPair)
+        public async Task<CandleRequest> GetCandleStickData(string curPair)
         {
             var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=6&price=M&granularity=M1";
             var uri = new Uri(apiUrl);
 
-            var response = await SendRequestAsync<CandleRequest>(uri);
+            var response = await SendRequestAsync<InstrumentResponse>(uri);
 
-            return response;
+            return response?.CandleRequest;
         }
 
 
