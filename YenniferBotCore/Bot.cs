@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -15,16 +11,13 @@ namespace YenniferBotCore
     public class Bot
     {
         private readonly ApiSettings _apiSettings;
-        private readonly string _settingsFilePath;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly OandaApiService _botService;
         private CancellationToken _cancellationToken;
         public Bot()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-
-            _settingsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "bot-settings/bot-settings.json");
-            var apiSettingsText = File.ReadAllText(_settingsFilePath);
+            var settingsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "bot-settings/bot-settings.json");
+            var apiSettingsText = File.ReadAllText(settingsFilePath);
             _apiSettings = JsonConvert.DeserializeObject<ApiSettings>(apiSettingsText);
 
             _cancellationTokenSource = new CancellationTokenSource();
@@ -34,8 +27,7 @@ namespace YenniferBotCore
 
         public Bot(string filePath)
         {
-            _settingsFilePath = filePath;
-            var apiSettingsText = File.ReadAllText(_settingsFilePath);
+            var apiSettingsText = File.ReadAllText(filePath);
             _apiSettings = JsonConvert.DeserializeObject<ApiSettings>(apiSettingsText);
 
             _cancellationTokenSource = new CancellationTokenSource();
