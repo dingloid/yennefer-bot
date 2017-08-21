@@ -43,14 +43,14 @@ namespace RESTBotService.Services
         /// </summary>
         /// <param name="curPair">Currency Pair you want to choose. i.e JPY_USD format</param>
         /// <returns>The candle stick prices of the past minute.</returns>
-        public async Task<CandleRequest> GetCandleStickData(string curPair)
+        public async Task<IList<Candle>> GetCandleStickData(string curPair)
         {
             var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=6&price=M&granularity=M1";
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<InstrumentResponse>(uri);
 
-            return response?.CandleRequest;
+            return response.Candles;
         }
 
 

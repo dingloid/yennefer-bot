@@ -54,6 +54,7 @@ namespace YenniferBotCore
 
             // await all tasks
             await strategy;
+            
         }
 
         private async Task ExecuteStrategy()
@@ -61,11 +62,27 @@ namespace YenniferBotCore
             Console.WriteLine("#####################\n Yennefer Bot Online \n#####################");
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
-            var getCandles = await _botService.GetCandleStickData("JPY_USD");
+            var getCandles = await _botService.GetCandleStickData("USD_JPY");
 
             Console.WriteLine();
-            Console.WriteLine($"Monopoly Money: {accountDetails.Balance}");
-            Console.WriteLine(getCandles);
+            Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
+            
+
+            foreach (var body in getCandles.Select(x => x.CandleBody))
+            {
+
+                var open = body.OpenPrice;
+                var close = body.ClosePrice;
+                var low = body.LowPrice;
+                var high = body.HighPrice;
+
+                Console.WriteLine("\n");
+                Console.WriteLine($"Open: {open}");
+                Console.WriteLine($"Close: {close}");
+                Console.WriteLine($"Low: {low}");
+                Console.WriteLine($"High: {high}");
+            }
+            
 
             while (!_cancellationToken.IsCancellationRequested)
             {

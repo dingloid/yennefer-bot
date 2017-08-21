@@ -8,7 +8,13 @@ namespace RESTBotService.Responses
 {
     public class InstrumentResponse
     {
+        [JsonProperty("instrument")]
+        public string Instrument { get; set; }
+
+        [JsonProperty("granularity")]
+        public string Granularity { get; set; }
+
         [JsonProperty("candles")]
-        public CandleRequest CandleRequest { get; set; }
+        public IList<Candle> Candles { get; set; }
     }
 }
