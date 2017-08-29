@@ -16,4 +16,18 @@ namespace YenniferBotCore
         Long,
         Short
     }
+
+    public enum Trend
+    {
+        Up,
+        Down,
+        None
+    }
+
+    public enum OrderType
+    {
+        Buy,
+        Sell,
+        NoAction
+    }
 }

@@ -45,12 +45,34 @@ namespace RESTBotService.Services
         /// <returns>The candle stick prices of the past minute.</returns>
         public async Task<IList<Candle>> GetCandleStickData(string curPair)
         {
-            var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=6&price=M&granularity=M1";
+            //H12 = 12 Hour Candlestick
+            //H8 = 8 Hour Candlestick
+            //M10 = 10 Minute Candlestick
+            //M30 = 30 Minute Candlstick
+            var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=6&price=M&granularity=M30";
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<InstrumentResponse>(uri);
 
             return response.Candles;
+        }
+
+        /// <summary>
+        /// Creates a trade order
+        /// </summary>
+        /// <param name="accountId">The id of the account</param>
+        /// <param name="instrument">The currency pair that is requested to be traded</param>
+        /// <param name="amount">The amount of currency to trade</param>
+        /// <returns>Nothing</returns>
+        public async Task<TradeResponse> CreateOrder(string accountId, string instrument, int amount)
+        {
+            var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/orders";
+            var orderRequest = new OrderRequest();
+            var uri = new Uri(apiUrl);
+
+            var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, orderRequest);
+
+            return response;
         }
 
 
