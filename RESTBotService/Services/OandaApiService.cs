@@ -67,10 +67,28 @@ namespace RESTBotService.Services
         public async Task<TradeResponse> CreateOrder(string accountId, string instrument, int amount)
         {
             var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/orders";
-            var orderRequest = new OrderRequest();
+            var orderRequest = new OrderRequest(amount, instrument, "fok", "type", "positionFill" );
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, orderRequest);
+
+            return response;
+        }
+
+        /// <summary>
+        /// Closes a trade order
+        /// </summary>
+        /// <param name="accountId">The id of the account</param>
+        /// <param name="instrument">The currency pair that is requested to be traded</param>
+        /// <param name="amount">The amount of positions you want to close</param>
+        /// <returns>Nothing</returns>
+        public async Task<TradeCloseResponse> CloseOrder(string accountId, string instrument, string amount)
+        {
+            var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/positions/{instrument}/close";
+            var closeRequest = new CloseRequest(amount);
+            var uri = new Uri(apiUrl);
+
+            var response = await SendRequestAsync<TradeCloseResponse>(uri, HttpMethod.Put, null, closeRequest);
 
             return response;
         }

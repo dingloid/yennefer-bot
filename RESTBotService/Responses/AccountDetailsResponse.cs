@@ -13,7 +13,7 @@ namespace RESTBotService.Responses
         public AccountDetails Account { get; set; }
 
         [JsonProperty("lastTransactionID")]
-        public string LastTransactionID { get; set; }
+        public string LastTransactionId { get; set; }
     }
 
 }

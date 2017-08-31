@@ -22,5 +22,14 @@ namespace RESTBotService.Models
 
         [JsonProperty("positionFill")]
         public string PositionFill { get; set; }
+
+        public OrderRequest(int units, string instrument, string fok, string type, string positionFill)
+        {
+            Units = units;
+            Instrument = instrument;
+            Fok = fok;
+            Type = type;
+            PositionFill = positionFill;
+        }
     }
 }
