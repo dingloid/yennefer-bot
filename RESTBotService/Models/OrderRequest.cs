@@ -14,7 +14,7 @@ namespace RESTBotService.Models
         [JsonProperty("instrument")]
         public string Instrument { get; set; }
 
-        [JsonProperty("FOK")]
+        [JsonProperty("timeInForce")]
         public string Fok { get; set; }
 
         [JsonProperty("type")]

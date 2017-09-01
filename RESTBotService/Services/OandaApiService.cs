@@ -67,7 +67,7 @@ namespace RESTBotService.Services
         public async Task<TradeResponse> CreateOrder(string accountId, string instrument, int amount)
         {
             var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/orders";
-            var orderRequest = new OrderRequest(amount, instrument, "fok", "type", "positionFill" );
+            var orderRequest = new OrderRequest(amount, instrument, "FOK", "MARKET", "DEFAULT" );
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, orderRequest);

@@ -54,13 +54,17 @@ namespace YenniferBotCore
 
             var key = Console.ReadKey();
 
-            if (key.Key == ConsoleKey.NumPad1)
+            if (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1)
             {
                 _instrumentType = "USD_JPY";
             }
-            else if (key.Key == ConsoleKey.NumPad2)
+            else if (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2)
             {
                 _instrumentType = "EUR_USD";
+            }
+            else if (key.Key != ConsoleKey.NumPad1 || key.Key != ConsoleKey.NumPad2 || key.Key == ConsoleKey.D1 || key.Key == ConsoleKey.D2)
+            {
+                Console.WriteLine("Please select 1 or 2.");
             }
             
             // initailize and start all the tasks
