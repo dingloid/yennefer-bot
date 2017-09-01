@@ -54,6 +54,11 @@ namespace YenniferBotCore
 
             var key = Console.ReadKey();
 
+            while (key.Key != ConsoleKey.NumPad1 || key.Key != ConsoleKey.NumPad2 || key.Key == ConsoleKey.D1 || key.Key == ConsoleKey.D2)
+            {
+                Console.WriteLine("Please select 1 or 2.");
+            }
+
             if (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1)
             {
                 _instrumentType = "USD_JPY";
@@ -62,17 +67,16 @@ namespace YenniferBotCore
             {
                 _instrumentType = "EUR_USD";
             }
-            else if (key.Key != ConsoleKey.NumPad1 || key.Key != ConsoleKey.NumPad2 || key.Key == ConsoleKey.D1 || key.Key == ConsoleKey.D2)
-            {
-                Console.WriteLine("Please select 1 or 2.");
-            }
-            
+
             // initailize and start all the tasks
             var strategy = ExecuteStrategy();
 
             // await all tasks
             await strategy;
             
+            //Q For Trade
+
+            //E For Sell
         }
 
         private async Task ExecuteStrategy()
