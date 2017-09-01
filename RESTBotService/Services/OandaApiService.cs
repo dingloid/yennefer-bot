@@ -70,7 +70,7 @@ namespace RESTBotService.Services
             var orderRequest = new OrderRequest(amount, instrument, "FOK", "MARKET", "DEFAULT" );
             var uri = new Uri(apiUrl);
 
-            var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, orderRequest);
+            var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, new Order{OrderRequest = orderRequest});
 
             return response;
         }

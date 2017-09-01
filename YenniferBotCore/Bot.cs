@@ -53,20 +53,35 @@ namespace YenniferBotCore
             Console.WriteLine("2. EUR/USD ");
 
             var key = Console.ReadKey();
-
-            while (key.Key != ConsoleKey.NumPad1 || key.Key != ConsoleKey.NumPad2 || key.Key == ConsoleKey.D1 || key.Key == ConsoleKey.D2)
-            {
-                Console.WriteLine("Please select 1 or 2.");
-            }
-
+            var validInput = false;
             if (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1)
             {
                 _instrumentType = "USD_JPY";
+                validInput = true;
             }
             else if (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2)
             {
                 _instrumentType = "EUR_USD";
+                validInput = true;
             }
+
+            while (!validInput)
+            {
+                Console.WriteLine("Please select 1 or 2.");
+                key = Console.ReadKey();
+                if (key.Key == ConsoleKey.NumPad1 || key.Key == ConsoleKey.D1)
+                {
+                    _instrumentType = "USD_JPY";
+                    validInput = true;
+                }
+                else if (key.Key == ConsoleKey.NumPad2 || key.Key == ConsoleKey.D2)
+                {
+                    _instrumentType = "EUR_USD";
+                    validInput = true;
+                }
+            }
+
+            
 
             // initailize and start all the tasks
             var strategy = ExecuteStrategy();
@@ -115,11 +130,6 @@ namespace YenniferBotCore
                     if (key.Key == ConsoleKey.X)
                     {
                         _cancellationTokenSource.Cancel();
-                    }
-                    if (key.Key == ConsoleKey.Q)
-                    {
-                        var order = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 100);
-
                     }
                 }
             }
