@@ -112,6 +112,11 @@ namespace YenniferBotCore
                     {
                         _cancellationTokenSource.Cancel();
                     }
+                    if (key.Key == ConsoleKey.Q)
+                    {
+                        var order = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 100);
+
+                    }
                 }
             }
         }
