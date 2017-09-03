@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using RESTBotService.Services;
 using RESTBotService.Models;
+using YenniferBotCore.Algo.AlgoModels;
 
 namespace YenniferBotCore.Algo
 {
@@ -16,26 +17,9 @@ namespace YenniferBotCore.Algo
         /// <returns>The candle stick prices of the past minute.</returns>
         public static OrderType RunCalculation(IList<Candle> candles)
         {
-            var candleBodyColor = Helpers.CheckBodyType(candles[5].CandleBody);
-            var candleBodyType = Helpers.CheckBodyType(candles[5].CandleBody);
+           var latestCandle = new HeikinAshi(candles[2].CandleBody, candles[1].CandleBody);
 
-            if (candleBodyType == BodyType.Doji)
-            {
-                var trend = Helpers.CheckPastThreePrices(candles);
-                if (trend == Trend.Up)
-                {
-                    return OrderType.Sell;
-                }
-                else if (trend == Trend.Down)
-                {
-                    return OrderType.Buy;
-                }
 
-            }
-            else
-            {
-                return OrderType.NoAction;
-            }
             return OrderType.NoAction;
         }
     }

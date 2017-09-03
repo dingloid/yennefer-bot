@@ -4,14 +4,26 @@ using System.Text;
 
 namespace YenniferBotCore
 {
+    public enum BodyColor
+    {
+        White,
+        Black
+    }
+
     public enum BodyType
     {
-        WhiteBody,
-        BlackBody,
+        Long,
+        Short,
         Doji
     }
 
-    public enum Shadow
+    public enum TopShadow
+    {
+        Long,
+        Short
+    }
+
+    public enum BottomShadow
     {
         Long,
         Short
@@ -29,5 +41,12 @@ namespace YenniferBotCore
         Buy,
         Sell,
         NoAction
+    }
+
+    public enum AnimalType
+    {
+        Bull,
+        Bear,
+        NoAnimal
     }
 }

@@ -88,10 +88,7 @@ namespace YenniferBotCore
 
             // await all tasks
             await strategy;
-            
-            //Q For Trade
 
-            //E For Sell
         }
 
         private async Task ExecuteStrategy()
@@ -105,8 +102,6 @@ namespace YenniferBotCore
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
 
             Console.WriteLine(_instrumentType);
-//
-//            await CheckForTradeAction(getCandles);
   
             foreach (var body in getCandles.Select(x => x.CandleBody))
             {
@@ -134,20 +129,5 @@ namespace YenniferBotCore
                 }
             }
         }
-
-//        private async Task CheckForTradeAction(IList<Candle> candleList)
-//        {
-//            var signal = Formula.RunCalculation(candleList);
-//
-//            switch (signal)
-//            {
-//                case OrderType.Buy:
-//                    await _botService.CreateOrder( _apiSettings.AccountId ,_instrumentType, 100);
-//                    break;
-//                case OrderType.Sell:
-//                    //TODO sell
-//                    break;
-//            }
-//        }
     }
 }
