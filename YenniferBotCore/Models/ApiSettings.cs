@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace YenniferBotCore.Models
+namespace YenneferBotCore.Models
 {
     public class ApiSettings
     {
