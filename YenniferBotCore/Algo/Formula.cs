@@ -18,9 +18,10 @@ namespace YenniferBotCore.Algo
         public static OrderType RunCalculation(IList<Candle> candles)
         {
            var latestCandle = new HeikinAshi(candles[2].CandleBody, candles[1].CandleBody);
+           var previousCandle = new HeikinAshi(candles[1].CandleBody, candles[0].CandleBody);
 
-
-            return OrderType.NoAction;
+           return OrderType.NoAction;
+            
         }
     }
 }

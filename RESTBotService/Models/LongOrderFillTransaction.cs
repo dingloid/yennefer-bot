@@ -29,7 +29,7 @@ namespace RESTBotService.Models
         public string OrderId { get; set; }
 
         [JsonProperty("pl")]
-        public string Pl { get; set; }
+        public double Pl { get; set; }
 
         [JsonProperty("price")]
         public string Price { get; set; }

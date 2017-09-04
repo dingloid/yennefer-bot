@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Newtonsoft.Json;
 using RESTBotService.Models;
 using RESTBotService.Services;
@@ -19,7 +20,8 @@ namespace YenniferBotCore
         private readonly OandaApiService _botService;
         private CancellationToken _cancellationToken;
         private string _instrumentType;
-
+        private double _pl;
+        
         public Bot()
         {
             var settingsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "bot-settings/bot-settings.json");
@@ -100,22 +102,20 @@ namespace YenniferBotCore
 
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
-
-            Console.WriteLine(_instrumentType);
   
-            foreach (var body in getCandles.Select(x => x.CandleBody))
-            {
-                var open = body.OpenPrice;
-                var close = body.ClosePrice;
-                var low = body.LowPrice;
-                var high = body.HighPrice;
-
-                Console.WriteLine("\n");
-                Console.WriteLine($"Open: {open}");
-                Console.WriteLine($"Close: {close}");
-                Console.WriteLine($"Low: {low}");
-                Console.WriteLine($"High: {high}");
-            }
+//            foreach (var body in getCandles.Select(x => x.CandleBody))
+//            {
+//                var open = body.OpenPrice;
+//                var close = body.ClosePrice;
+//                var low = body.LowPrice;
+//                var high = body.HighPrice;
+//
+//                Console.WriteLine("\n");
+//                Console.WriteLine($"Open: {open}");
+//                Console.WriteLine($"Close: {close}");
+//                Console.WriteLine($"Low: {low}");
+//                Console.WriteLine($"High: {high}");
+//            }
             
             while (!_cancellationToken.IsCancellationRequested)
             {
@@ -127,6 +127,30 @@ namespace YenniferBotCore
                         _cancellationTokenSource.Cancel();
                     }
                 }
+
+                var currentCandle = Formula.RunCalculation(getCandles);
+
+                if (_pl != -30.00)
+                {
+                    switch (currentCandle)
+                    {
+                        case OrderType.Buy:
+                            await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+                            break;
+                        case OrderType.Sell:
+                            var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
+                            _pl = closeOrder.LongOrderFillTransaction.Pl;
+                            break;
+                        case OrderType.NoAction:
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Your shit sucks and doesn't work. Try again");
+                    _cancellationTokenSource.Cancel();
+                }
+          
             }
         }
     }
