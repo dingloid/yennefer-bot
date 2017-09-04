@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using RESTBotService.Services;
 using RESTBotService.Models;
-using YenniferBotCore.Algo.AlgoModels;
+using YenneferBotCore.Algo.AlgoModels;
 
-namespace YenniferBotCore.Algo
+namespace YenneferBotCore.Algo
 {
     public class Formula
     {

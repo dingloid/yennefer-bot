@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YenneferBotCore.Models
+﻿namespace YenneferBotCore.Models
 {
     public class ApiSettings
     {

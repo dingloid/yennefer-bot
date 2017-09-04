@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Newtonsoft.Json;
-using RESTBotService.Models;
 using RESTBotService.Services;
-using YenniferBotCore.Algo;
-using YenniferBotCore.Models;
+using YenneferBotCore.Algo;
+using YenneferBotCore.Models;
 
-namespace YenniferBotCore
+namespace YenneferBotCore
 {
     public class Bot
     {

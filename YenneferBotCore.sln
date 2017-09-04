@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenniferBotCore", "YenniferBotCore\YenniferBotCore.csproj", "{78EC3771-6CF3-49F3-B609-E871800CBFA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YenneferBotCore", "YenniferBotCore\YenneferBotCore.csproj", "{78EC3771-6CF3-49F3-B609-E871800CBFA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTBotService", "RESTBotService\RESTBotService.csproj", "{5BDE1DCF-1CCD-49E4-854A-7F5B65A7244D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTBotService", "RESTBotService\RESTBotService.csproj", "{5BDE1DCF-1CCD-49E4-854A-7F5B65A7244D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

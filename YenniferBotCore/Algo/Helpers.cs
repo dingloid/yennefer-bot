@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using Newtonsoft.Json.Serialization;
 using RESTBotService.Models;
-using YenniferBotCore.Algo.AlgoModels;
+using YenneferBotCore.Algo.AlgoModels;
 
-namespace YenniferBotCore.Algo
+namespace YenneferBotCore.Algo
 {
     public static class Helpers
     {

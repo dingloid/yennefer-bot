@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using RESTBotService.Models;
 
-namespace YenniferBotCore.Algo.AlgoModels
+namespace YenneferBotCore.Algo.AlgoModels
 {
     public class HeikinAshi
     {

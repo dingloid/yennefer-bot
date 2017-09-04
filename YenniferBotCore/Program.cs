@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace YenneferBotCore
+﻿namespace YenneferBotCore
 {
     class Program
     {
