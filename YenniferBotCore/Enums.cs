@@ -20,13 +20,15 @@ namespace YenniferBotCore
     public enum TopShadow
     {
         Long,
-        Short
+        Short,
+        NoShadow
     }
 
     public enum BottomShadow
     {
         Long,
-        Short
+        Short,
+        NoShadow
     }
 
     public enum Trend

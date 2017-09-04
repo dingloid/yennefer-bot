@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Newtonsoft.Json.Serialization;
 using RESTBotService.Models;
+using YenniferBotCore.Algo.AlgoModels;
 
 namespace YenniferBotCore.Algo
 {
@@ -91,6 +92,11 @@ namespace YenniferBotCore.Algo
                 {
                     return TopShadow.Long;
                 }
+
+                if (Math.Abs(candle.HighPrice - candle.OpenPrice) < 0.1)
+                {
+                    return TopShadow.NoShadow;
+                }
             }
 
             if (candleColor == BodyColor.White)
@@ -101,6 +107,11 @@ namespace YenniferBotCore.Algo
                 if (topShadow > body)
                 {
                     return TopShadow.Long;
+                }
+
+                if (Math.Abs(candle.HighPrice - candle.ClosePrice) < 0.1)
+                {
+                    return TopShadow.NoShadow;
                 }
             }
             
@@ -127,6 +138,11 @@ namespace YenniferBotCore.Algo
                 {
                     return BottomShadow.Long;
                 }
+
+                if (Math.Abs(candle.ClosePrice - candle.LowPrice) < 0.1)
+                {
+                    return BottomShadow.NoShadow;
+                }
             }
 
             if (candleColor == BodyColor.White)
@@ -137,6 +153,11 @@ namespace YenniferBotCore.Algo
                 if (bottomShadow > body)
                 {
                     return BottomShadow.Long;
+                }
+
+                if (Math.Abs(candle.OpenPrice - candle.LowPrice) < 0.1)
+                {
+                    return BottomShadow.NoShadow;
                 }
             }
 
@@ -176,6 +197,24 @@ namespace YenniferBotCore.Algo
             }
             
             return AnimalType.NoAnimal;
+        }
+
+        /// <summary>
+        /// Converts Heikin Ashi into CandleBody.
+        /// </summary>
+        /// <param name="haCandle">The Heikin Ashi candlestick that you want to convert into a CandleBody object</param>
+        /// <returns>Returns CandleBody object</returns>
+        public static CandleBody ConvertHACandle(HeikinAshi haCandle)
+        {
+            var candle = new CandleBody
+            {
+                OpenPrice = haCandle.HA_Open,
+                HighPrice = haCandle.HA_High,
+                LowPrice = haCandle.HA_Low,
+                ClosePrice = haCandle.HA_Close
+            };
+
+            return candle;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace RESTBotService.Models
         public bool HedgingEnabled { get; set; }
 
         [JsonProperty("lastTransactionID")]
-        public string LastTransactionID { get; set; }
+        public string LastTransactionId { get; set; }
 
         [JsonProperty("balance")]
         public string Balance { get; set; }

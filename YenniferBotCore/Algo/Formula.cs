@@ -10,6 +10,7 @@ namespace YenniferBotCore.Algo
 {
     public class Formula
     {
+
         /// <summary>
         /// Runs the primary calculation for trading
         /// </summary>
@@ -17,11 +18,32 @@ namespace YenniferBotCore.Algo
         /// <returns>The candle stick prices of the past minute.</returns>
         public static OrderType RunCalculation(IList<Candle> candles)
         {
-           var latestCandle = new HeikinAshi(candles[2].CandleBody, candles[1].CandleBody);
-           var previousCandle = new HeikinAshi(candles[1].CandleBody, candles[0].CandleBody);
-
-           return OrderType.NoAction;
             
+            var latestHaCandle = Helpers.ConvertHACandle(new HeikinAshi(candles[2].CandleBody, candles[1].CandleBody));
+            var previousHaCandle = Helpers.ConvertHACandle(new HeikinAshi(candles[1].CandleBody, candles[0].CandleBody));
+
+            if (Helpers.CheckAnimalType(latestHaCandle) == AnimalType.Bear && Helpers.CheckAnimalType(previousHaCandle) == AnimalType.Bear)
+            {
+                if (Math.Abs(latestHaCandle.OpenPrice - latestHaCandle.ClosePrice) > Math.Abs(previousHaCandle.OpenPrice - previousHaCandle.ClosePrice))
+                {
+                    if (Helpers.CheckTopShadow(latestHaCandle) == TopShadow.NoShadow)
+                    {
+                        return OrderType.Buy;
+                    }
+                }
+            }
+
+            if (Helpers.CheckAnimalType(latestHaCandle) == AnimalType.Bull && Helpers.CheckAnimalType(previousHaCandle) == AnimalType.Bull)
+            {
+                if (Math.Abs(latestHaCandle.OpenPrice - latestHaCandle.ClosePrice) > Math.Abs(previousHaCandle.OpenPrice - previousHaCandle.ClosePrice))
+                {
+                    if (Helpers.CheckBottomShadow(latestHaCandle) == BottomShadow.NoShadow)
+                    {
+                        return OrderType.Sell;
+                    }
+                }
+            }
+            return OrderType.NoAction;
         }
     }
 }

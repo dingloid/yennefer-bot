@@ -76,11 +76,25 @@ namespace RESTBotService.Services
         }
 
         /// <summary>
+        /// Checks for open trade orders
+        /// </summary>
+        /// <param name="accountId">The id of the account</param>
+        /// <returns>Nothing</returns>
+        public async Task<OpenTradeResponse> CheckForOpenTrade(string accountId)
+        {
+            var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/openTrades";
+            var uri = new Uri(apiUrl);
+
+            var response = await SendRequestAsync<OpenTradeResponse>(uri);
+
+            return response;
+        }
+
+        /// <summary>
         /// Closes a trade order
         /// </summary>
         /// <param name="accountId">The id of the account</param>
         /// <param name="instrument">The currency pair that is requested to be traded</param>
-        /// <param name="amount">The amount of positions you want to close</param>
         /// <returns>Nothing</returns>
         public async Task<TradeCloseResponse> CloseOrder(string accountId, string instrument)
         {

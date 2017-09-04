@@ -21,7 +21,9 @@ namespace YenniferBotCore
         private CancellationToken _cancellationToken;
         private string _instrumentType;
         private double _pl;
-        
+        private DateTime _buyTimeStamp;
+        private DateTime _sellTimeStamp;
+     
         public Bot()
         {
             var settingsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "bot-settings/bot-settings.json");
@@ -82,9 +84,7 @@ namespace YenniferBotCore
                     validInput = true;
                 }
             }
-
             
-
             // initailize and start all the tasks
             var strategy = ExecuteStrategy();
 
@@ -99,7 +99,8 @@ namespace YenniferBotCore
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
             var getCandles = await _botService.GetCandleStickData(_instrumentType);
-
+            var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
+            
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
   
@@ -130,17 +131,32 @@ namespace YenniferBotCore
 
                 var currentCandle = Formula.RunCalculation(getCandles);
 
-                if (_pl != -30.00)
+                if (Math.Abs(_pl - (-30.00)) > 0.1)
                 {
                     switch (currentCandle)
                     {
                         case OrderType.Buy:
-                            await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+                            var buyOrder = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+
+                            //Get Time Stamp of Buy Request
+                            _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
+                            Console.WriteLine($"Buy Order Created at: " + _buyTimeStamp + "\n");
                             break;
+
                         case OrderType.Sell:
-                            var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
-                            _pl = closeOrder.LongOrderFillTransaction.Pl;
+                            if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0))
+                            {
+                                var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
+
+                                //Grabs the current Profit/Loss
+                                _pl = closeOrder.LongOrderFillTransaction.Pl;
+
+                                //Get Time Stamp of Sell Request
+                                _sellTimeStamp = closeOrder.LongOrderCreateTransaction.Time;
+                                Console.WriteLine($"Sell Order Created at: " + _sellTimeStamp + "\n");
+                            }
                             break;
+
                         case OrderType.NoAction:
                             break;
                     }

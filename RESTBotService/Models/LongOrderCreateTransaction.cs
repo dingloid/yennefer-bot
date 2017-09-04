@@ -1,22 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace RESTBotService.Models
 {
     public class LongOrderCreateTransaction
     {
-        public string accountID { get; set; }
-        public string batchID { get; set; }
-        public string id { get; set; }
-        public string instrument { get; set; }
-        public LongPositionCloseout longPositionCloseout { get; set; }
-        public string positionFill { get; set; }
-        public string reason { get; set; }
-        public string time { get; set; }
-        public string timeInForce { get; set; }
-        public string type { get; set; }
-        public string units { get; set; }
-        public int userID { get; set; }
+        [JsonProperty("acconutID")]
+        public string AccountId { get; set; }
+
+        [JsonProperty("batchID")]
+        public string BatchId { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("instrument")]
+        public string Instrument { get; set; }
+
+        [JsonProperty("longPositionCloseout")]
+        public LongPositionCloseout LongPositionCloseout { get; set; }
+
+        [JsonProperty("positionFill")]
+        public string PositionFill { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+
+        [JsonProperty("time")]
+        public DateTime Time { get; set; }
+
+        [JsonProperty("timeInForce")]
+        public string TimeInForce { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("units")]
+        public string Units { get; set; }
+
+        [JsonProperty("userID")]
+        public int UserId { get; set; }
     }
 }
