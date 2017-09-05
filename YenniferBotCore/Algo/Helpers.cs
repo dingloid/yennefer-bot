@@ -88,7 +88,7 @@ namespace YenneferBotCore.Algo
                     return TopShadow.Long;
                 }
 
-                if (Math.Abs(candle.HighPrice - candle.OpenPrice) < 0.1)
+                if (Math.Abs(candle.HighPrice - candle.OpenPrice) < 0.5)
                 {
                     return TopShadow.NoShadow;
                 }
@@ -104,7 +104,7 @@ namespace YenneferBotCore.Algo
                     return TopShadow.Long;
                 }
 
-                if (Math.Abs(candle.HighPrice - candle.ClosePrice) < 0.1)
+                if (Math.Abs(candle.HighPrice - candle.ClosePrice) < 0.5)
                 {
                     return TopShadow.NoShadow;
                 }
@@ -134,7 +134,7 @@ namespace YenneferBotCore.Algo
                     return BottomShadow.Long;
                 }
 
-                if (Math.Abs(candle.ClosePrice - candle.LowPrice) < 0.1)
+                if (Math.Abs(candle.ClosePrice - candle.LowPrice) < 0.5)
                 {
                     return BottomShadow.NoShadow;
                 }
@@ -150,7 +150,7 @@ namespace YenneferBotCore.Algo
                     return BottomShadow.Long;
                 }
 
-                if (Math.Abs(candle.OpenPrice - candle.LowPrice) < 0.1)
+                if (Math.Abs(candle.OpenPrice - candle.LowPrice) < 0.5)
                 {
                     return BottomShadow.NoShadow;
                 }

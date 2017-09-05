@@ -92,7 +92,7 @@ namespace YenneferBotCore
 
         private async Task ExecuteStrategy()
         {
-            Console.WriteLine("#####################\n Yennefer Bot Online \n#####################");
+            Console.WriteLine("---------------------\n Yennefer Bot Online \n---------------------");
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
             var getCandles = await _botService.GetCandleStickData(_instrumentType);
@@ -160,10 +160,12 @@ namespace YenneferBotCore
                 }
                 else
                 {
-                    Console.WriteLine("Your shit sucks and doesn't work. Try again");
-                    _cancellationTokenSource.Cancel();
+                    //This is where you know you fucked up.
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Console.WriteLine("You Died");
+                    }
                 }
-          
             }
         }
     }
