@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RESTBotService.Services;
 using YenneferBotCore.Algo;
+using YenneferBotCore.Algo.AlgoModels;
 using YenneferBotCore.Models;
 
 namespace YenneferBotCore
@@ -101,20 +102,6 @@ namespace YenneferBotCore
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
   
-//            foreach (var body in getCandles.Select(x => x.CandleBody))
-//            {
-//                var open = body.OpenPrice;
-//                var close = body.ClosePrice;
-//                var low = body.LowPrice;
-//                var high = body.HighPrice;
-//
-//                Console.WriteLine("\n");
-//                Console.WriteLine($"Open: {open}");
-//                Console.WriteLine($"Close: {close}");
-//                Console.WriteLine($"Low: {low}");
-//                Console.WriteLine($"High: {high}");
-//            }
-            
             while (!_cancellationToken.IsCancellationRequested)
             {
                 if (Console.KeyAvailable)

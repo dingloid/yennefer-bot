@@ -88,7 +88,7 @@ namespace YenneferBotCore.Algo
                     return TopShadow.Long;
                 }
 
-                if (Math.Abs(candle.HighPrice - candle.OpenPrice) < 0.5)
+                if (Math.Abs(candle.HighPrice - candle.OpenPrice) < 0.01)
                 {
                     return TopShadow.NoShadow;
                 }
@@ -104,7 +104,7 @@ namespace YenneferBotCore.Algo
                     return TopShadow.Long;
                 }
 
-                if (Math.Abs(candle.HighPrice - candle.ClosePrice) < 0.5)
+                if (Math.Abs(candle.HighPrice - candle.ClosePrice) < 0.01)
                 {
                     return TopShadow.NoShadow;
                 }
@@ -134,7 +134,7 @@ namespace YenneferBotCore.Algo
                     return BottomShadow.Long;
                 }
 
-                if (Math.Abs(candle.ClosePrice - candle.LowPrice) < 0.5)
+                if (Math.Abs(candle.ClosePrice - candle.LowPrice) < 0.01)
                 {
                     return BottomShadow.NoShadow;
                 }
@@ -150,7 +150,7 @@ namespace YenneferBotCore.Algo
                     return BottomShadow.Long;
                 }
 
-                if (Math.Abs(candle.OpenPrice - candle.LowPrice) < 0.5)
+                if (Math.Abs(candle.OpenPrice - candle.LowPrice) < 0.01)
                 {
                     return BottomShadow.NoShadow;
                 }
@@ -195,11 +195,37 @@ namespace YenneferBotCore.Algo
         }
 
         /// <summary>
+        /// Checks to see if Candle Stick is Bearish or Bullish
+        /// </summary>
+        /// <param name="haCandle">The candlestick that you want to check.</param>
+        /// <returns>Returns the animal type of the Heikin Ashi candle</returns>
+        public static AnimalType CheckHaCandleAnimalType(HeikinAshi haCandle)
+        {
+            if (haCandle.HA_Close > haCandle.HA_Open) //White Candle
+            {
+                if (Math.Abs(haCandle.HA_Open - haCandle.HA_Low) < 0.02 && Math.Abs(haCandle.HA_Open - haCandle.HA_Close) > 0.05) //Check for no Lower Shadow and upper wick is long
+                {
+                    return AnimalType.Bull;
+                }
+            }
+
+            if (haCandle.HA_Open > haCandle.HA_Close) //Black Candle
+            {
+                if (Math.Abs(haCandle.HA_High - haCandle.HA_Open) < 0.02 && Math.Abs(haCandle.HA_Close - haCandle.HA_Low) > 0.05) //Check For no Upper Shadow and lower wick is long
+                {
+                    return AnimalType.Bear;
+                }
+            }
+
+            return AnimalType.NoAnimal;
+        }
+
+        /// <summary>
         /// Converts Heikin Ashi into CandleBody.
         /// </summary>
         /// <param name="haCandle">The Heikin Ashi candlestick that you want to convert into a CandleBody object</param>
         /// <returns>Returns CandleBody object</returns>
-        public static CandleBody ConvertHACandle(HeikinAshi haCandle)
+        public static CandleBody ConvertHaCandle(HeikinAshi haCandle)
         {
             var candle = new CandleBody
             {
