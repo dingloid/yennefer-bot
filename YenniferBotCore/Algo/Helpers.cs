@@ -194,6 +194,25 @@ namespace YenneferBotCore.Algo
             return AnimalType.NoAnimal;
         }
 
+
+        /// <summary>
+        /// Checks for Stop Loss
+        /// </summary>
+        /// <param name="buyPrice">The price a candle stick order was created at.</param>
+        /// <param name="currentPrice">Current Price of the candle stick</param>
+        /// <returns>Returns true if stop loss needs to be used otherwise false.</returns>
+        public static bool CheckStopLoss(double buyPrice, double currentPrice)
+        {
+            if ((buyPrice - (buyPrice * 0.10)) <= currentPrice)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Checks to see if Candle Stick is Bearish or Bullish
         /// </summary>

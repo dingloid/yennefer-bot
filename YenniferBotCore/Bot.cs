@@ -96,8 +96,7 @@ namespace YenneferBotCore
             Console.WriteLine("---------------------\n Yennefer Bot Online \n---------------------");
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
-            var getCandles = await _botService.GetCandleStickData(_instrumentType);
-            var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
+     
             
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
@@ -112,6 +111,9 @@ namespace YenneferBotCore
                         _cancellationTokenSource.Cancel();
                     }
                 }
+
+                var getCandles = await _botService.GetCandleStickData(_instrumentType);
+                var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
 
                 var currentCandle = Formula.RunCalculation(getCandles);
 
@@ -151,6 +153,7 @@ namespace YenneferBotCore
                     for (int i = 0; i < 15; i++)
                     {
                         Console.WriteLine("You Died");
+                        break;
                     }
                 }
             }
