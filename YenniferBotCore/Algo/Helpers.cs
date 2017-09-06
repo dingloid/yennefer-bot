@@ -222,7 +222,7 @@ namespace YenneferBotCore.Algo
         {
             if (haCandle.HA_Close > haCandle.HA_Open) //White Candle
             {
-                if (Math.Abs(haCandle.HA_Open - haCandle.HA_Low) < 0.02 && Math.Abs(haCandle.HA_Open - haCandle.HA_Close) > 0.05) //Check for no Lower Shadow and upper wick is long
+                if (haCandle.HA_Close > (haCandle.HA_High + haCandle.HA_Low)/2) 
                 {
                     return AnimalType.Bull;
                 }
@@ -230,7 +230,7 @@ namespace YenneferBotCore.Algo
 
             if (haCandle.HA_Open > haCandle.HA_Close) //Black Candle
             {
-                if (Math.Abs(haCandle.HA_High - haCandle.HA_Open) < 0.02 && Math.Abs(haCandle.HA_Close - haCandle.HA_Low) > 0.05) //Check For no Upper Shadow and lower wick is long
+                if (haCandle.HA_Close < (haCandle.HA_High + haCandle.HA_Low) / 2)
                 {
                     return AnimalType.Bear;
                 }
