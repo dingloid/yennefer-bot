@@ -8,6 +8,7 @@ using RESTBotService.Services;
 using YenneferBotCore.Algo;
 using YenneferBotCore.Algo.AlgoModels;
 using YenneferBotCore.Models;
+using YenneferBotCore.Utils;
 
 namespace YenneferBotCore
 {
@@ -82,6 +83,7 @@ namespace YenneferBotCore
                     validInput = true;
                 }
             }
+            Logger.Log($"Bot Started using Instrument Type: {_instrumentType}");
             
             // initailize and start all the tasks
             var strategy = ExecuteStrategy();
