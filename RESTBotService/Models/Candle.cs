@@ -22,8 +22,7 @@ namespace RESTBotService.Models
 
         public override string ToString()
         {
-            return "High: " + CandleBody.HighPrice + "\nLow: " + CandleBody.LowPrice + "\nOpen: " +
-                   CandleBody.OpenPrice + "\nClose: " + CandleBody.ClosePrice;
+            return "\n High: " + CandleBody.HighPrice + "\n Low: " + CandleBody.LowPrice + "\n Open: " + CandleBody.OpenPrice + "\n Close: " + CandleBody.ClosePrice;
         }
     }
 }

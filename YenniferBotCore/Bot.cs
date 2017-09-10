@@ -98,6 +98,7 @@ namespace YenneferBotCore
             Console.WriteLine("---------------------\n Yennefer Bot Online \n---------------------");
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
+            var updateAccount = await _botService.AccountUpdate(_apiSettings.AccountId, 7);
             var getCandles = await _botService.GetCandleStickData(_instrumentType);
             var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
 
@@ -116,8 +117,9 @@ namespace YenneferBotCore
                 }
                 
                 var currentCandle = Formula.RunCalculation(getCandles);
-                Logger.Log("Get Candle: " + string.Join(",", getCandles.ToString()));
-                Logger.Log("Calculated Candle Order Type: " + currentCandle);
+//                Logger.Log("Get Candle: " + string.Join(",", getCandles));
+//                Logger.Log("Calculated Candle Order Type: " + currentCandle);
+                  Logger.Log("Account Update: " + updateAccount);
 
                 if (Math.Abs(_pl - (-30.00)) > 0.1)
                 {

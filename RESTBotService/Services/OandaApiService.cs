@@ -64,7 +64,7 @@ namespace RESTBotService.Services
         /// <param name="accountId">The id of the account</param>
         /// <param name="instrument">The currency pair that is requested to be traded</param>
         /// <param name="amount">The amount of currency to trade</param>
-        /// <returns>Nothing</returns>
+        /// <returns></returns>
         public async Task<TradeResponse> CreateOrder(string accountId, string instrument, int amount)
         {
             var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/orders";
@@ -72,6 +72,22 @@ namespace RESTBotService.Services
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<TradeResponse>(uri, HttpMethod.Post, null, new Order{OrderRequest = orderRequest});
+
+            return response;
+        }
+
+        /// <summary>
+        /// Updates Account Details
+        /// </summary>
+        /// <param name="accountId">The id of the account</param>
+        /// <param name="transactionId">The id of the last transaction</param>
+        /// <returns>Updates the account details based off last Transaction Id</returns>
+        public async Task<AccountChangesResponse> AccountUpdate(string accountId, int transactionId)
+        {
+            var apiUrl = $"{_baseUrl}{_apiVersion}/accounts/{accountId}/changes?sinceTransactionID={transactionId}";
+            var uri = new Uri(apiUrl);
+
+            var response = await SendRequestAsync<AccountChangesResponse>(uri);
 
             return response;
         }
