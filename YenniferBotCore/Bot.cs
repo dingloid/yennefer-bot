@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RESTBotService.Models;
 using RESTBotService.Services;
+using Serilog;
 using YenneferBotCore.Algo;
 using YenneferBotCore.Models;
-using YenneferBotCore.Utils;
 
 namespace YenneferBotCore
 {
@@ -85,7 +86,7 @@ namespace YenneferBotCore
                     validInput = true;
                 }
             }
-            Logger.Log($"Bot Started using Instrument Type: {_instrumentType}");
+            Log.Information($"Bot Started using Instrument Type: {_instrumentType}");
             
             // initailize and start all the tasks
             var candles = RetrieveCandles(TimeSpan.FromSeconds(4));
@@ -124,7 +125,7 @@ namespace YenneferBotCore
                 var currentCandle = Formula.RunCalculation(_candles);
 //                Logger.Log("Get Candle: " + string.Join(",", getCandles));
 //                Logger.Log("Calculated Candle Order Type: " + currentCandle);
-                Logger.Log("Account Update: " + updateAccount);
+                Log.Debug("Account Update: " + updateAccount);
 
                 if (Math.Abs(_pl - (-30.00)) > 0.1)
                 {
@@ -176,6 +177,7 @@ namespace YenneferBotCore
             while (true)
             {
                 _candles = await _botService.GetCandleStickData(_instrumentType);
+                Log.Information("Candle Information: {@Candles}", _candles);
                 var delayTask = Task.Delay(interval, _cancellationToken);
                 try
                 {
