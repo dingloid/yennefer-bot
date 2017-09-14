@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RESTBotService.Models;
 using RESTBotService.Services;
 using YenneferBotCore.Algo;
-using YenneferBotCore.Algo.AlgoModels;
 using YenneferBotCore.Models;
 using YenneferBotCore.Utils;
 
@@ -22,6 +23,7 @@ namespace YenneferBotCore
         private double _pl;
         private DateTime _buyTimeStamp;
         private DateTime _sellTimeStamp;
+        private IList<Candle> _candles;
      
         public Bot()
         {
@@ -86,9 +88,11 @@ namespace YenneferBotCore
             Logger.Log($"Bot Started using Instrument Type: {_instrumentType}");
             
             // initailize and start all the tasks
+            var candles = RetrieveCandles(TimeSpan.FromSeconds(4));
             var strategy = ExecuteStrategy();
 
             // await all tasks
+            await candles;
             await strategy;
 
         }
@@ -99,7 +103,6 @@ namespace YenneferBotCore
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
             var updateAccount = await _botService.AccountUpdate(_apiSettings.AccountId, 7);
-            var getCandles = await _botService.GetCandleStickData(_instrumentType);
             var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
 
             Console.WriteLine();
@@ -115,18 +118,21 @@ namespace YenneferBotCore
                         _cancellationTokenSource.Cancel();
                     }
                 }
-                
-                var currentCandle = Formula.RunCalculation(getCandles);
+                // don't have any candle information yet, just go ahead and continue
+                if (_candles == null) continue;
+
+                var currentCandle = Formula.RunCalculation(_candles);
 //                Logger.Log("Get Candle: " + string.Join(",", getCandles));
 //                Logger.Log("Calculated Candle Order Type: " + currentCandle);
-                  Logger.Log("Account Update: " + updateAccount);
+                Logger.Log("Account Update: " + updateAccount);
 
                 if (Math.Abs(_pl - (-30.00)) > 0.1)
                 {
                     switch (currentCandle)
                     {
                         case OrderType.Buy:
-                            var buyOrder = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+                            var buyOrder =
+                                await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
 
                             //Get Time Stamp of Buy Request
                             _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
@@ -136,7 +142,8 @@ namespace YenneferBotCore
                         case OrderType.Sell:
                             if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0))
                             {
-                                var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
+                                var closeOrder =
+                                    await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
 
                                 //Grabs the current Profit/Loss
                                 _pl = closeOrder.LongOrderFillTransaction.Pl;
@@ -160,6 +167,26 @@ namespace YenneferBotCore
                     }
                 }
             }
+        }
+
+        private async Task RetrieveCandles(TimeSpan interval)
+        {
+            // run this action until we need to quit/cancel
+            // run it for the interval passed in
+            while (true)
+            {
+                _candles = await _botService.GetCandleStickData(_instrumentType);
+                var delayTask = Task.Delay(interval, _cancellationToken);
+                try
+                {
+                    await delayTask;
+                }
+                catch (TaskCanceledException)
+                {
+                    return;
+                }
+            }
+
         }
     }
 }
