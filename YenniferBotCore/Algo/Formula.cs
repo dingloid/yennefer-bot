@@ -23,7 +23,7 @@ namespace YenneferBotCore.Algo
             {
                 if (Math.Abs(latestHaCandle.HA_Open - latestHaCandle.HA_Close) > Math.Abs(previousHaCandle.HA_Open - previousHaCandle.HA_Close))
                 {
-                    if (Math.Abs(latestHaCandle.HA_Open - latestHaCandle.HA_High) < 0.1)
+                    if (Math.Abs(latestHaCandle.HA_Open - latestHaCandle.HA_High) < 0.01)
                     {
                         return OrderType.Buy;
                     }
@@ -34,7 +34,7 @@ namespace YenneferBotCore.Algo
             {
                 if (Math.Abs(latestHaCandle.HA_Open - latestHaCandle.HA_Close) > Math.Abs(previousHaCandle.HA_Open - previousHaCandle.HA_Close))
                 {
-                    if (Math.Abs(latestHaCandle.HA_Close - latestHaCandle.HA_Low) < 0.1)
+                    if (Math.Abs(latestHaCandle.HA_Close - latestHaCandle.HA_Low) < 0.01)
                     {
                         return OrderType.Sell;
                     }
