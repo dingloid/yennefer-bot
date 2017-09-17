@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Accord.MachineLearning.VectorMachines.Learning;
 using Newtonsoft.Json;
 using RESTBotService.Models;
 using RESTBotService.Services;
