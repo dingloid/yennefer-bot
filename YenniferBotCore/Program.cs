@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Serilog;
 
 namespace YenneferBotCore
@@ -14,7 +15,29 @@ namespace YenneferBotCore
             }
             Log.Logger = new LoggerConfiguration().WriteTo.File(filePath).CreateLogger();
             var bot = new Bot();
-            bot.StartBot().Wait();
+            try
+            {
+                bot.StartBot().Wait();
+            }
+            catch(AggregateException ae)
+            {
+                Log.Error($"ERROR: {ae.Message}");
+                if (ae.InnerExceptions != null)
+                {
+                    Log.Error($"Number of Errors: {ae.InnerExceptions.Count}");
+                    foreach (var exception in ae.InnerExceptions)
+                    {
+                        Log.Error(exception, "");
+                    }
+                }
+                else
+                {
+                    Log.Error("Number of Errors: NULL");
+                }
+
+
+                throw ae.Flatten();
+            }
         }
     }
 }
