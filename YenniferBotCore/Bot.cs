@@ -174,7 +174,7 @@ namespace YenneferBotCore
             while (true)
             {
                 _candles = await _botService.GetCandleStickData(_instrumentType);
-                Log.Information("Candle Information: {@Candles}", _candles);
+                //Log.Information("Candle Information: {@Candles}", _candles);
                 var delayTask = Task.Delay(interval, _cancellationToken);
                 try
                 {
@@ -184,8 +184,15 @@ namespace YenneferBotCore
                 {
                     return;
                 }
+                catch (AggregateException ae)
+                {
+                    foreach (var exception in ae.Flatten().InnerExceptions)
+                    {
+                       Log.Error(exception, "");
+                    }
+                    throw ae.Flatten();
+                }
             }
-
         }
     }
 }
