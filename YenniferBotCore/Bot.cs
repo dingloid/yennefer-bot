@@ -186,10 +186,21 @@ namespace YenneferBotCore
                 }
                 catch (AggregateException ae)
                 {
-                    foreach (var exception in ae.Flatten().InnerExceptions)
+                    Log.Error($"ERROR: {ae.Message}");
+                    if (ae.InnerExceptions != null)
                     {
-                       Log.Error(exception, "");
+                        Log.Error($"Number of Errors: {ae.InnerExceptions.Count}");
+                        foreach (var exception in ae.InnerExceptions)
+                        {
+                            Log.Error(exception, "");
+                        }
                     }
+                    else
+                    {
+                        Log.Error("Number of Errors: NULL");
+                    }
+
+
                     throw ae.Flatten();
                 }
             }
