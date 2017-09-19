@@ -137,6 +137,7 @@ namespace YenneferBotCore
                             //Get Time Stamp of Buy Request
                             _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
                             Console.WriteLine($"Buy Order Created at: " + _buyTimeStamp + "\n");
+                            Log.Information("Buy Order Created");
                             break;
 
                         case OrderType.Sell:
@@ -151,6 +152,7 @@ namespace YenneferBotCore
                                 //Get Time Stamp of Sell Request
                                 _sellTimeStamp = closeOrder.LongOrderCreateTransaction.Time;
                                 Console.WriteLine($"Sell Order Created at: " + _sellTimeStamp + "\n");
+                                Log.Information("Sell Order Created");
                             }
                             break;
 
