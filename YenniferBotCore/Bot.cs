@@ -124,10 +124,12 @@ namespace YenneferBotCore
                 if (_candles == null) continue;
 
                 var currentCandle = Formula.RunCalculation(_candles);
-
+                Log.Information($"Algorithm hit");
+                Log.Information($"Current Candle Algorithm: " + currentCandle);
 
                 if (Math.Abs(_pl - (-30.00)) > 0.1)
                 {
+                    Log.Information($"Inside P/L");
                     switch (currentCandle)
                     {
                         case OrderType.Buy:
@@ -175,6 +177,7 @@ namespace YenneferBotCore
             // run it for the interval passed in
             while (true)
             {
+                Log.Information($"Hello is it me you're looking for?");
                 _candles = await _botService.GetCandleStickData(_instrumentType);
                 //Log.Information("Candle Information: {@Candles}", _candles);
                 var delayTask = Task.Delay(interval, _cancellationToken);

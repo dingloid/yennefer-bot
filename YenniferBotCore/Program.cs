@@ -34,8 +34,6 @@ namespace YenneferBotCore
                 {
                     Log.Error("Number of Errors: NULL");
                 }
-
-
                 throw ae.Flatten();
             }
         }
