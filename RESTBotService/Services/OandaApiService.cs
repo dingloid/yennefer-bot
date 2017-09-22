@@ -50,7 +50,7 @@ namespace RESTBotService.Services
             //M5 = 5 Minute
             //M10 = 10 Minute Candlestick
             //M30 = 30 Minute Candlstick
-            var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=3&price=M&granularity=M5";
+            var apiUrl = $"{_baseUrl}{_apiVersion}/instruments/{curPair}/candles?count=4&price=M&granularity=M5";
             var uri = new Uri(apiUrl);
 
             var response = await SendRequestAsync<InstrumentResponse>(uri);

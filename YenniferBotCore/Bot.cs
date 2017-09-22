@@ -90,11 +90,12 @@ namespace YenneferBotCore
             Log.Information($"Bot Started using Instrument Type: {_instrumentType}");
             
             // initailize and start all the tasks
-            var candles = RetrieveCandles(TimeSpan.FromSeconds(4));
+            //var candles = RetrieveCandles(TimeSpan.FromSeconds(4));
             var strategy = ExecuteStrategy();
 
             // await all tasks
-            await candles;
+            // treat this as a "fire and forget" to start the task of retrieving candles every 4 seconds.
+            RetrieveCandles(TimeSpan.FromSeconds(4));
             await strategy;
 
         }
@@ -106,6 +107,7 @@ namespace YenneferBotCore
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
 //            var updateAccount = await _botService.AccountUpdate(_apiSettings.AccountId, 7);
             var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
+           
 
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
@@ -120,8 +122,8 @@ namespace YenneferBotCore
                         _cancellationTokenSource.Cancel();
                     }
                 }
-                // don't have any candle information yet, just go ahead and continue
-                if (_candles == null) continue;
+                if(_candles == null)
+                    continue;
 
                 var currentCandle = Formula.RunCalculation(_candles);
                 Log.Information($"Algorithm hit");
@@ -133,13 +135,12 @@ namespace YenneferBotCore
                     switch (currentCandle)
                     {
                         case OrderType.Buy:
-                            var buyOrder =
-                                await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+                            var buyOrder = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
 
                             //Get Time Stamp of Buy Request
                             _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
                             Console.WriteLine($"Buy Order Created at: " + _buyTimeStamp + "\n");
-                            Log.Information("Buy Order Created");
+                            Log.Information($"Buy Order Created at {_buyTimeStamp}");
                             break;
 
                         case OrderType.Sell:
@@ -154,7 +155,7 @@ namespace YenneferBotCore
                                 //Get Time Stamp of Sell Request
                                 _sellTimeStamp = closeOrder.LongOrderCreateTransaction.Time;
                                 Console.WriteLine($"Sell Order Created at: " + _sellTimeStamp + "\n");
-                                Log.Information("Sell Order Created");
+                                Log.Information($"Sell Order Created at {_sellTimeStamp}");
                             }
                             break;
 
