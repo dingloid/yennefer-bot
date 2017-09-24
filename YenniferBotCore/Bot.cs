@@ -106,8 +106,6 @@ namespace YenneferBotCore
 
             var accountDetails = await _botService.GetAccountDetails(_apiSettings.AccountId);
 //            var updateAccount = await _botService.AccountUpdate(_apiSettings.AccountId, 7);
-            var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
-           
 
             Console.WriteLine();
             Console.WriteLine($"Monopoly Money: {accountDetails.Balance}\n");
@@ -141,9 +139,11 @@ namespace YenneferBotCore
                             _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
                             Console.WriteLine($"Buy Order Created at: " + _buyTimeStamp + "\n");
                             Log.Information($"Buy Order Created at {_buyTimeStamp}");
+                            _candles = null;
                             break;
 
                         case OrderType.Sell:
+                            var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
                             if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0))
                             {
                                 var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
