@@ -95,7 +95,7 @@ namespace YenneferBotCore
 
             // await all tasks
             // treat this as a "fire and forget" to start the task of retrieving candles every 4 seconds.
-            RetrieveCandles(TimeSpan.FromSeconds(4));
+            RetrieveCandles(TimeSpan.FromMinutes(5));//Don't await this
             await strategy;
 
         }
@@ -135,7 +135,7 @@ namespace YenneferBotCore
                     switch (currentCandle)
                     {
                         case OrderType.Buy:
-                            var buyOrder = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 200);
+                            var buyOrder = await _botService.CreateOrder(_apiSettings.AccountId, _instrumentType, 1500);
 
                             //Get Time Stamp of Buy Request
                             _buyTimeStamp = buyOrder.OrderCreateTransaction.Time;
