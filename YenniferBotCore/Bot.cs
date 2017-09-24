@@ -144,9 +144,15 @@ namespace YenneferBotCore
                         case OrderType.Sell:
                             if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0))
                             {
-                                var closeOrder =
-                                    await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
-
+                                var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
+                                if (closeOrder == null)
+                                {
+                                    Log.Information($"{nameof(closeOrder)} was null after selling order. About to break..." );
+                                }
+                                if (closeOrder.LongOrderFillTransaction == null)
+                                {
+                                    Log.Information($"{nameof(closeOrder.LongOrderFillTransaction)} was null after selling order. About to break...");
+                                }
                                 //Grabs the current Profit/Loss
                                 _pl = closeOrder.LongOrderFillTransaction.Pl;
 
