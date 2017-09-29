@@ -141,7 +141,7 @@ namespace YenneferBotCore
 
                         case OrderType.Sell:
                             var getOpenOrders = await _botService.CheckForOpenTrade(_apiSettings.AccountId);
-                            if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0))
+                            if (getOpenOrders.Trades.Any(x => x.CurrentUnits > 0) && getOpenOrders.Trades.Any(x => x.Instrument == _instrumentType))
                             {
                                 var closeOrder = await _botService.CloseOrder(_apiSettings.AccountId, _instrumentType);
                                 if (closeOrder == null)
