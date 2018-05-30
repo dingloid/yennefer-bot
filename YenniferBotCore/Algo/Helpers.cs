@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Accord.Collections;
+using Accord.Compat;
+using Accord.Statistics;
 using RESTBotService.Models;
 using YenneferBotCore.Algo.AlgoModels;
 
@@ -57,14 +60,11 @@ namespace YenneferBotCore.Algo
             var averageBody = ((candle.ClosePrice + candle.OpenPrice + candle.HighPrice + candle.LowPrice) /4) * 1.3;
             var body = Math.Abs(candle.OpenPrice - candle.ClosePrice);
 
-            if (body > averageBody)
+            if (Math.Abs(candle.OpenPrice - candle.ClosePrice) < 0.0)
             {
-                return BodyType.Long;
+                return BodyType.Doji;
             }
-            else
-            {
-                return BodyType.Short;
-            }
+            return body > averageBody ? BodyType.Long : BodyType.Short;
         }
 
         /// <summary>
@@ -196,24 +196,6 @@ namespace YenneferBotCore.Algo
 
 
         /// <summary>
-        /// Checks for Stop Loss
-        /// </summary>
-        /// <param name="buyPrice">The price a candle stick order was created at.</param>
-        /// <param name="currentPrice">Current Price of the candle stick</param>
-        /// <returns>Returns true if stop loss needs to be used otherwise false.</returns>
-        public static bool CheckStopLoss(double buyPrice, double currentPrice)
-        {
-            if ((buyPrice - (buyPrice * 0.10)) <= currentPrice)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Checks to see if Candle Stick is Bearish or Bullish
         /// </summary>
         /// <param name="haCandle">The candlestick that you want to check.</param>
@@ -256,5 +238,7 @@ namespace YenneferBotCore.Algo
 
             return candle;
         }
+
+
     }
 }
