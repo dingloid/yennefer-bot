@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>exe</OutputType>
+    <RuntimeIdentifiers>win10-x64;osx.10.12-x64;debian.9-x64</RuntimeIdentifiers>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
     <Product>YenneferBot</Product>
     <Description />
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
