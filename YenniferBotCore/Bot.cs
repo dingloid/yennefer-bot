@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using Accord.MachineLearning.VectorMachines.Learning;
 using Newtonsoft.Json;
 using RESTBotService.Models;
 using RESTBotService.Services;
@@ -168,8 +166,7 @@ namespace YenneferBotCore
                 }
                 else
                 {
-                    //This is where you know you fucked up.
-                    Console.WriteLine("You Died");
+                    Console.WriteLine("Something has went wrong...check logs...");
 
                 }
             }
